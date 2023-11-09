@@ -77,6 +77,19 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     }
 
+    void ordenar(int modo){
+        if(modo == 1) {
+            //Ascendente
+            Collections.sort(list_items);
+        }else if(modo == 2){
+            //Descendente
+            Collections.sort(list_items, Collections.reverseOrder());
+        }else{
+            ordenarLista();
+        }
+        notifyDataSetChanged();
+    }
+
     void ordenarLista(){
         //Ordenar ascendente
         //Collections.sort(list_items);
@@ -86,14 +99,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
         if(orden == 0){
             Collections.sort(list_items);
-            notifyDataSetChanged();
             orden=1;
         }
         else{
             Collections.sort(list_items, Collections.reverseOrder());
-            notifyDataSetChanged();
             orden=0;
         }
+        notifyDataSetChanged();
 
     }
 }

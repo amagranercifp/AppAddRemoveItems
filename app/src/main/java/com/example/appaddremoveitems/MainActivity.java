@@ -1,10 +1,14 @@
 package com.example.appaddremoveitems;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,10 +31,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ItemAdapter adapter;
 
+    Toolbar toolbar;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
 
         initItems();
 
@@ -44,13 +55,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btnAñadir = (Button) findViewById(R.id.btnAñadir);
 
-        ibOrdenar = (ImageButton)  findViewById(R.id.ibOrdenar);
-
         btnAñadir.setOnClickListener(this);
 
-        ibOrdenar.setOnClickListener(this);
+
+    }
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.opcion1){
+            //Ascendente
+            sortItems(1);
+        }
+        else if(id == R.id.opcion2){
+            //Descendente
+            sortItems(2);
+        }
+        else if(id == R.id.opcion3){
+            //Interactivo
+            sortItems(3);
+        }
+
+        return true;
     }
 
     // Handles the row being being clicked
@@ -61,16 +96,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //Llamamos funcion de añadir items
             addItems(view);
         }
-        if(view.getId() == R.id.ibOrdenar){
-            //Llamamos funcion de añadir items
-            sortItems(view);
-        }
-
-
     }
 
-    public void sortItems(View view){
-            adapter.ordenarLista();
+    public void sortItems(int modo){
+        adapter.ordenar(modo);
     }
 
     public void addItems(View view){
