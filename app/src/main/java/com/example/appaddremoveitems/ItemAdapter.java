@@ -5,15 +5,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     ArrayList<String> list_items;
+
+    int orden=0;
 
     public ItemAdapter(ArrayList<String> list_items) {
         this.list_items = list_items;
@@ -51,6 +55,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             btnBorrar = itemView.findViewById(R.id.btnBorrar);
 
             btnBorrar.setOnClickListener(view ->{
+                String texto_item = list_items.get(getAdapterPosition());
+                Toast.makeText(itemView.getContext(),"Elemento eliminado "+texto_item,Toast.LENGTH_LONG).show();
+                list_items.remove(getAdapterPosition());
+                notifyItemRemoved(getAdapterPosition());
 
             });
         }
@@ -59,6 +67,33 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             tvItem.setText(item);
         }
 
+    }
+
+    void añadirItems(String item){
+
+        list_items.add(item);
+
+        notifyDataSetChanged();
+
+    }
+
+    void ordenarLista(){
+        //Ordenar ascendente
+        //Collections.sort(list_items);
+
+        //Ordenar descendente
+        //Collections.sort(list_items, Collections.reverseOrder());
+
+        if(orden == 0){
+            Collections.sort(list_items);
+            notifyDataSetChanged();
+            orden=1;
+        }
+        else{
+            Collections.sort(list_items, Collections.reverseOrder());
+            notifyDataSetChanged();
+            orden=0;
+        }
 
     }
 }
