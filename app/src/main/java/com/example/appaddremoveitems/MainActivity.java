@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        //Inicialización de los datos
         initItems();
 
         if(adapter == null){
@@ -52,6 +52,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rvListadoItems = (RecyclerView) findViewById(R.id.rvListadoItems);
         rvListadoItems.setAdapter(adapter);
         rvListadoItems.setLayoutManager(new LinearLayoutManager(this));
+
+
+
+
 
         btnAñadir = (Button) findViewById(R.id.btnAñadir);
 

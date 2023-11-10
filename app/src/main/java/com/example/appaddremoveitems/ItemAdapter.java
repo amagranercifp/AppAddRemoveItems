@@ -16,7 +16,6 @@ import java.util.Collections;
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     ArrayList<String> list_items;
-
     int orden=0;
 
     public ItemAdapter(ArrayList<String> list_items) {
