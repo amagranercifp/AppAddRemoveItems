@@ -54,9 +54,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rvListadoItems.setLayoutManager(new LinearLayoutManager(this));
 
 
-
-
-
         btnAñadir = (Button) findViewById(R.id.btnAñadir);
 
         btnAñadir.setOnClickListener(this);
