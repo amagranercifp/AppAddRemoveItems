@@ -2,6 +2,7 @@ package com.example.appaddremoveitems;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -33,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     Toolbar toolbar;
 
+    SearchView barraBusqueda;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        barraBusqueda = findViewById(R.id.svBusqueda);
+
+        barraBusqueda.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filtrado(newText);
+                return false;
+            }
+        });
+
 
 
         //Inicialización de los datos
@@ -61,6 +81,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btnAñadir.setOnClickListener(this);
 
+
+    }
+
+    private void filtrado(String texto){
+        ArrayList<String> filteredList_items = new ArrayList<>();
+        for(String item : list_items){
+            if(item.toLowerCase().contains(texto.toLowerCase())){
+                filteredList_items.add(item);
+            }
+        }
+        adapter.setFilterList(filteredList_items);
 
     }
 

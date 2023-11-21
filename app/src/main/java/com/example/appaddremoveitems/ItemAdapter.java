@@ -40,6 +40,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         holder.bindData(list_items.get(position));
     }
 
+    public void setFilterList(ArrayList<String> lista){
+        list_items = lista;
+        notifyDataSetChanged();
+
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView tvItem;
