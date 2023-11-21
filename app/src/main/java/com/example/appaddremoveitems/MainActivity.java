@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Toolbar toolbar;
 
     SearchView barraBusqueda;
+
+    FloatingActionButton fabAñadir;
 
 
     @Override
@@ -64,6 +69,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
 
+        fabAñadir = findViewById(R.id.fabAñadir);
+
+
+        fabAñadir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog dialog = new Dialog(MainActivity.this);
+                dialog.setContentView(R.layout.dialog_additem_layout);
+
+                EditText etTextoItem = dialog.findViewById(R.id.etTextoItem);
+                Button btnDialogAñadir = dialog.findViewById(R.id.btnDialogAñadir);
+
+                btnDialogAñadir.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String item = etTextoItem.getText().toString();
+                        // tb se puede realizar una validación de campo no vacio...
+                        list_items.add(item);
+                        //añadimos el item al final
+                        adapter.notifyItemInserted(list_items.size()-1);
+
+                        //hacemos desplazar la lista de items hasta dicho valor
+                        rvListadoItems.scrollToPosition(list_items.size()-1);
+
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
+
+            }
+        });
+
+
 
         //Inicialización de los datos
         initItems();
@@ -77,9 +116,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rvListadoItems.setLayoutManager(new LinearLayoutManager(this));
 
 
-        btnAñadir = (Button) findViewById(R.id.btnAñadir);
+        //btnAñadir = (Button) findViewById(R.id.btnAñadir);
 
-        btnAñadir.setOnClickListener(this);
+        //btnAñadir.setOnClickListener(this);
 
 
     }
@@ -127,26 +166,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
 
-        if(view.getId() == R.id.btnAñadir){
+        //if(view.getId() == R.id.btnAñadir){
             //Llamamos funcion de añadir items
-            addItems(view);
-        }
+            //addItems(view);
+        //}
     }
 
     public void sortItems(int modo){
         adapter.ordenar(modo);
     }
 
-    public void addItems(View view){
-        tvAñadirTexto = (EditText) findViewById(R.id.tvAñadirTexto);
+    //public void addItems(View view){
+    //    tvAñadirTexto = (EditText) findViewById(R.id.tvAñadirTexto);
 
         //list_items.add(tvAñadirTexto.getText().toString());
         //adapter.list_items.add(tvAñadirTexto.getText().toString());
         //adapter.notifyDataSetChanged();
 
-        adapter.añadirItems(tvAñadirTexto.getText().toString());
-        Toast.makeText(view.getContext(),"Elemento añadido "+tvAñadirTexto.getText().toString(),Toast.LENGTH_LONG).show();
-    }
+    //    adapter.añadirItems(tvAñadirTexto.getText().toString());
+    //    Toast.makeText(view.getContext(),"Elemento añadido "+tvAñadirTexto.getText().toString(),Toast.LENGTH_LONG).show();
+    //}
 
     void initItems(){
         for(int i=0; i<15; i++){
