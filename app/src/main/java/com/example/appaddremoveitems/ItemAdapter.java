@@ -1,5 +1,6 @@
 package com.example.appaddremoveitems;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -17,6 +19,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     ArrayList<String> list_items;
     int orden=0;
+
+    int pares=0; //0-> item par no coloreado
+    int impar=0; //0-> item impar no coloreado
 
     public ItemAdapter(ArrayList<String> list_items) {
         this.list_items = list_items;
@@ -38,6 +43,28 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.bindData(list_items.get(position));
+        if(position%2 ==0 ){
+            if(pares == 1){
+                holder.cardView.setCardBackgroundColor(Color.BLUE);
+            }
+            else{
+                holder.cardView.setCardBackgroundColor(Color.WHITE);
+            }
+        }
+        if(position%2 !=0){
+            if(impar == 1){
+                holder.cardView.setCardBackgroundColor(Color.RED);
+            }
+            else{
+                holder.cardView.setCardBackgroundColor(Color.WHITE);
+            }
+        }
+    }
+
+    public void pintaItems(int p, int imp){
+        pares = p;
+        impar = imp;
+        notifyDataSetChanged();
     }
 
     public void setFilterList(ArrayList<String> lista){
@@ -51,6 +78,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         TextView tvItem;
         Button btnBorrar;
 
+        CardView cardView;
+
         private ItemAdapter adapter;
 
         public ViewHolder(@NonNull View itemView) {
@@ -58,6 +87,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
             tvItem = itemView.findViewById(R.id.tvItem);
             btnBorrar = itemView.findViewById(R.id.btnBorrar);
+            cardView = itemView.findViewById(R.id.cardView);
 
             btnBorrar.setOnClickListener(view ->{
                 String texto_item = list_items.get(getAdapterPosition());

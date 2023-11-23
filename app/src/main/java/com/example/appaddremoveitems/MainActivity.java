@@ -148,11 +148,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(id == R.id.opcion1){
             //Ascendente
-            sortItems(1);
+            //sortItems(1);
+            pintaItems(1,0);
         }
         else if(id == R.id.opcion2){
             //Descendente
-            sortItems(2);
+            //sortItems(2);
+            pintaItems(0,1);
         }
         else if(id == R.id.opcion3){
             //Interactivo
@@ -170,6 +172,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //Llamamos funcion de añadir items
             //addItems(view);
         //}
+    }
+
+    public void pintaItems(int pares, int impares){
+        adapter.pintaItems(pares,impares);
     }
 
     public void sortItems(int modo){
